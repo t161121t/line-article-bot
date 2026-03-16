@@ -1,0 +1,21 @@
+# 記事収集
+feedparser==6.0.11
+requests==2.31.0
+
+# DB
+supabase==2.4.0
+
+# AI
+anthropic==0.25.0
+
+# LINE Bot
+line-bot-sdk==3.11.0
+
+# Webhook サーバー
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9
+
+# ユーティリティ
+python-dotenv==1.0.1
+pydantic==2.7.0
