@@ -118,3 +118,54 @@ python main.py
 | Render | 無料（スリープあり） |
 
 **合計: ほぼ $0〜$0.05 / 月**
+
+---
+
+## 実際のセットアップ手順（ハマりポイントまとめ）
+
+### Python バージョンについて
+
+Python 3.14 では `pydantic-core` がビルドできないため、**Python 3.11** で仮想環境を作成する必要がある。
+
+```bash
+brew install python@3.11
+python3.11 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Supabase 接続
+
+- **SUPABASE_URL**: `https://<project-ref>.supabase.co`（PostgreSQL接続文字列のホスト名から取得）
+- **SUPABASE_SERVICE_KEY**: `sb_secret_...` 形式の新しいキー（Supabase Dashboard → Settings → API → service_role）
+- テーブルは `supabase/schema.sql` の内容を Supabase Dashboard → SQL Editor で実行して作成
+
+### Anthropic API
+
+- console.anthropic.com でAPIキーを発行
+- クレジットを追加しただけでは使えない場合がある → **Settings → Limits → Spending limits** を設定する必要あり
+- クレジットと同じワークスペースで発行したAPIキーを使うこと
+
+### LINE 設定
+
+| 変数 | 取得場所 | 備考 |
+|------|----------|------|
+| `LINE_CHANNEL_ACCESS_TOKEN` | Messaging API タブ → Channel access token | 「Issue」ボタンで発行 |
+| `LINE_CHANNEL_SECRET` | Basic settings タブ → Channel secret | |
+| `LINE_USER_ID` | Messaging API タブ → Your user ID | `U` で始まる32文字。数字のみのIDは誤り |
+
+### Qiita APIトークン
+
+- qiita.com → 設定 → アプリケーション → 個人用アクセストークン → 発行
+- スコープは `read_qiita` のみでOK
+- 説明欄は空白でも問題なし
+- 設定しなくてもZenn・HackerNewsのみで動作する
+
+### 動作確認済み環境
+
+```
+Python: 3.11
+supabase: 2.28.2（2.4.0では sb_secret_ 形式のキーが無効エラーになる）
+anthropic: 0.83.0
+linebot: v3系
+```
